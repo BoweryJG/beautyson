@@ -60,7 +60,7 @@ function App() {
     <div className="app">
       <header className="app-header">
         <div className="header-content">
-          <h1 className="app-title">Sonic Genius Lab</h1>
+          <h1 className="app-title">Beau's Lab</h1>
           <p className="app-subtitle">Where Music Meets Innovation</p>
         </div>
         <div className="header-actions">

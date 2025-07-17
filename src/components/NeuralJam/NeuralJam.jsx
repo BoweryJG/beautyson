@@ -315,7 +315,7 @@ const NeuralJam = () => {
   return (
     <div className="neural-jam">
       <div className="jam-header">
-        <h2>🧠 Neural Jam Session</h2>
+        <h2>🧠 Beau's Neural Jam Session</h2>
         <p>AI-powered music generation that runs entirely in your browser - no limits, pure creativity!</p>
         <button 
           className={`hack-mode-btn ${hackMode ? 'active' : ''}`}
