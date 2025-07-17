@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './IntervalTrainer.css';
 import useAudio from '../../hooks/useAudio';
+import useProgress from '../../hooks/useProgress';
 
 const IntervalTrainer = () => {
   const { playTone, playChord, noteFrequencies } = useAudio();
+  const { progress, updateIntervalProgress, updatePreferences, getStats } = useProgress();
   const [currentInterval, setCurrentInterval] = useState(null);
   const [userGuess, setUserGuess] = useState('');
   const [score, setScore] = useState({ correct: 0, total: 0 });
   const [feedback, setFeedback] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
-  const [difficulty, setDifficulty] = useState('beginner');
+  const [difficulty, setDifficulty] = useState(progress.preferences.difficulty || 'beginner');
+  const [showStats, setShowStats] = useState(false);
 
   // Musical intervals with their mathematical ratios
   const intervals = {
@@ -72,14 +75,21 @@ const IntervalTrainer = () => {
     if (!currentInterval || !userGuess) return;
     
     const isCorrect = userGuess === currentInterval.name;
+    const newScore = {
+      correct: score.correct + (isCorrect ? 1 : 0),
+      total: score.total + 1
+    };
+    
+    setScore(newScore);
     
     if (isCorrect) {
-      setScore(prev => ({ correct: prev.correct + 1, total: prev.total + 1 }));
       setFeedback('🎉 Correct! Great ear for music!');
     } else {
-      setScore(prev => ({ correct: prev.correct, total: prev.total + 1 }));
       setFeedback(`❌ That was a ${currentInterval.name}. Try again!`);
     }
+    
+    // Save progress to localStorage
+    updateIntervalProgress(newScore);
     
     // Auto-generate new interval after 2 seconds
     setTimeout(() => {
@@ -141,6 +151,14 @@ const IntervalTrainer = () => {
     generateNewInterval();
   }, [difficulty]);
 
+  // Update preferences when difficulty changes
+  useEffect(() => {
+    updatePreferences({ difficulty });
+  }, [difficulty]);
+
+  // Get current stats
+  const stats = getStats();
+
   const accuracyPercentage = score.total > 0 ? Math.round((score.correct / score.total) * 100) : 0;
 
   return (
@@ -159,14 +177,76 @@ const IntervalTrainer = () => {
 
       <div className="score-display">
         <div className="score-item">
-          <span className="score-label">Score:</span>
+          <span className="score-label">Current Session:</span>
           <span className="score-value">{score.correct}/{score.total}</span>
         </div>
         <div className="score-item">
-          <span className="score-label">Accuracy:</span>
+          <span className="score-label">Session Accuracy:</span>
           <span className="score-value">{accuracyPercentage}%</span>
         </div>
+        <div className="score-item">
+          <span className="score-label">Overall:</span>
+          <span className="score-value">{stats.overallAccuracy}%</span>
+        </div>
+        <div className="score-item">
+          <span className="score-label">Level:</span>
+          <span className="score-value">{stats.currentLevel}</span>
+        </div>
       </div>
+
+      <div className="stats-toggle">
+        <button 
+          className="stats-btn"
+          onClick={() => setShowStats(!showStats)}
+        >
+          {showStats ? '📊 Hide Stats' : '📊 Show Progress'}
+        </button>
+      </div>
+
+      {showStats && (
+        <div className="progress-stats">
+          <div className="stats-grid">
+            <div className="stat-card">
+              <h4>🎯 Achievements</h4>
+              <div className="achievements">
+                {stats.achievements.length > 0 ? (
+                  stats.achievements.map((achievement, index) => (
+                    <div key={index} className="achievement-badge">
+                      🏆 {achievement}
+                    </div>
+                  ))
+                ) : (
+                  <p>Keep practicing to unlock achievements!</p>
+                )}
+              </div>
+            </div>
+            
+            <div className="stat-card">
+              <h4>🔥 Streaks</h4>
+              <div className="streak-info">
+                <div className="streak-item">
+                  <span>Current: {stats.currentStreak}</span>
+                </div>
+                <div className="streak-item">
+                  <span>Best: {stats.bestStreak}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="stat-card">
+              <h4>📈 Progress</h4>
+              <div className="progress-info">
+                <div className="progress-item">
+                  <span>Sessions: {stats.totalSessions}</span>
+                </div>
+                <div className="progress-item">
+                  <span>Compositions: {stats.totalCompositions}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="training-area">
         <div className="play-section">

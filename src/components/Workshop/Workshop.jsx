@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Workshop.css';
 import IntervalTrainer from '../IntervalTrainer/IntervalTrainer';
+import useProgress from '../../hooks/useProgress';
 
 const Workshop = () => {
+  const { progress, saveComposition, updateComposition, deleteComposition } = useProgress();
   const [selectedForm, setSelectedForm] = useState('sonata');
   const [composition, setComposition] = useState('');
+  const [compositionTitle, setCompositionTitle] = useState('');
+  const [currentCompositionId, setCurrentCompositionId] = useState(null);
+  const [showSaved, setShowSaved] = useState(false);
+  const [autoSaveEnabled, setAutoSaveEnabled] = useState(true);
 
   const musicalForms = [
     { id: 'sonata', name: 'Sonata Form', description: 'Classical three-part structure used by Mozart and Beethoven' },
@@ -17,6 +23,20 @@ const Workshop = () => {
     setSelectedForm(formId);
   };
 
+  // Auto-save functionality
+  useEffect(() => {
+    if (autoSaveEnabled && composition.trim() && currentCompositionId) {
+      const autoSaveTimer = setTimeout(() => {
+        updateComposition(currentCompositionId, {
+          content: composition,
+          title: compositionTitle || 'Untitled Composition'
+        });
+      }, 2000);
+      
+      return () => clearTimeout(autoSaveTimer);
+    }
+  }, [composition, compositionTitle, currentCompositionId, autoSaveEnabled]);
+
   const generateTemplate = () => {
     const templates = {
       sonata: 'Exposition:\nTheme A (Tonic)\nBridge\nTheme B (Dominant)\nClosing\n\nDevelopment:\nThematic transformation\nModulation\nFragmentation\n\nRecapitulation:\nTheme A (Tonic)\nBridge\nTheme B (Tonic)\nCoda',
@@ -26,6 +46,45 @@ const Workshop = () => {
     };
     
     setComposition(templates[selectedForm] || '');
+  };
+
+  const saveCurrentComposition = () => {
+    if (composition.trim()) {
+      const newComposition = {
+        content: composition,
+        title: compositionTitle || 'Untitled Composition',
+        form: selectedForm
+      };
+      
+      if (currentCompositionId) {
+        updateComposition(currentCompositionId, newComposition);
+      } else {
+        saveComposition(newComposition);
+        setCurrentCompositionId(Date.now()); // Use timestamp as ID
+      }
+    }
+  };
+
+  const loadComposition = (comp) => {
+    setComposition(comp.content);
+    setCompositionTitle(comp.title);
+    setSelectedForm(comp.form);
+    setCurrentCompositionId(comp.id);
+  };
+
+  const newComposition = () => {
+    setComposition('');
+    setCompositionTitle('');
+    setCurrentCompositionId(null);
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this composition?')) {
+      deleteComposition(id);
+      if (currentCompositionId === id) {
+        newComposition();
+      }
+    }
   };
 
   return (
@@ -57,9 +116,62 @@ const Workshop = () => {
         <div className="composition-area">
           <div className="composition-header">
             <h3>Your Composition Studio</h3>
-            <button className="template-button" onClick={generateTemplate}>
-              Generate Template
-            </button>
+            <div className="composition-controls">
+              <input
+                type="text"
+                className="composition-title-input"
+                value={compositionTitle}
+                onChange={(e) => setCompositionTitle(e.target.value)}
+                placeholder="Composition Title"
+              />
+              <button className="template-button" onClick={generateTemplate}>
+                Generate Template
+              </button>
+              <button className="save-button" onClick={saveCurrentComposition}>
+                💾 Save
+              </button>
+              <button className="new-button" onClick={newComposition}>
+                📝 New
+              </button>
+              <button className="saved-button" onClick={() => setShowSaved(!showSaved)}>
+                📁 Saved ({progress.compositions.length})
+              </button>
+            </div>
+          </div>
+          
+          {showSaved && (
+            <div className="saved-compositions">
+              <h4>Saved Compositions</h4>
+              <div className="compositions-grid">
+                {progress.compositions.map((comp) => (
+                  <div key={comp.id} className="composition-card">
+                    <h5>{comp.title}</h5>
+                    <p className="composition-form">{comp.form}</p>
+                    <p className="composition-date">
+                      {new Date(comp.timestamp).toLocaleDateString()}
+                    </p>
+                    <div className="composition-actions">
+                      <button onClick={() => loadComposition(comp)}>Load</button>
+                      <button onClick={() => handleDelete(comp.id)}>Delete</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          <div className="composition-status">
+            <span className="auto-save-status">
+              {autoSaveEnabled ? '✅ Auto-save enabled' : '❌ Auto-save disabled'}
+            </span>
+            <label className="auto-save-toggle">
+              <input
+                type="checkbox"
+                checked={autoSaveEnabled}
+                onChange={(e) => setAutoSaveEnabled(e.target.checked)}
+              />
+              Auto-save
+            </label>
           </div>
           
           <textarea
