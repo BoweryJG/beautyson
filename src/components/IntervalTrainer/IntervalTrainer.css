@@ -1,0 +1,375 @@
+.interval-trainer {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 2px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.interval-trainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  background-size: 400% 400%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+.trainer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.trainer-header h3 {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  text-shadow: 0 0 10px var(--electric-blue);
+  margin: 0;
+}
+
+.difficulty-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.difficulty-selector label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.difficulty-selector select {
+  background: var(--bg-tertiary);
+  border: 2px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  color: var(--text-primary);
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.difficulty-selector select:hover {
+  border-color: var(--electric-blue);
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+}
+
+.score-display {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 2rem;
+}
+
+.score-item {
+  background: var(--gradient-secondary);
+  padding: 1rem 2rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-green);
+}
+
+.score-label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.score-value {
+  color: var(--text-primary);
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px var(--neon-green);
+}
+
+.training-area {
+  background: var(--bg-tertiary);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--glass-border);
+}
+
+.play-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.play-interval-btn {
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: 16px;
+  padding: 1rem 2rem;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.play-interval-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-neon);
+}
+
+.play-interval-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.play-instructions {
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: 0;
+}
+
+.guess-section {
+  text-align: center;
+}
+
+.guess-section h4 {
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+}
+
+.interval-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.interval-option {
+  background: var(--glass-bg);
+  border: 2px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 1rem;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.interval-option:hover:not(:disabled) {
+  border-color: var(--purple-primary);
+  box-shadow: var(--shadow-purple);
+  transform: translateY(-2px);
+}
+
+.interval-option.selected {
+  background: var(--gradient-primary);
+  border-color: var(--electric-blue);
+  box-shadow: var(--shadow-neon);
+}
+
+.interval-option:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.submit-btn {
+  background: var(--gradient-secondary);
+  border: none;
+  border-radius: 12px;
+  padding: 0.8rem 2rem;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-green);
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.feedback {
+  background: var(--glass-bg);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.feedback.correct {
+  color: var(--neon-green);
+  border-color: var(--neon-green);
+  box-shadow: var(--shadow-green);
+}
+
+.feedback.incorrect {
+  color: var(--orange-accent);
+  border-color: var(--orange-accent);
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+}
+
+.math-explanation {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.math-explanation h4 {
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px var(--purple-primary);
+}
+
+.math-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.math-item {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.math-item strong {
+  color: var(--text-accent);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.math-item p {
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.learning-tips {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.learning-tips h4 {
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px var(--orange-accent);
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.tip-item {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.tip-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-purple);
+  border-color: var(--purple-primary);
+}
+
+.tip-item strong {
+  color: var(--text-accent);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.tip-item p {
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .interval-trainer {
+    padding: 1rem;
+  }
+  
+  .trainer-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .score-display {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .score-item {
+    padding: 0.8rem 1.5rem;
+  }
+  
+  .training-area {
+    padding: 1rem;
+  }
+  
+  .interval-options {
+    grid-template-columns: 1fr;
+  }
+  
+  .math-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .tips-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .interval-option:hover:not(:disabled) {
+    transform: none;
+  }
+  
+  .tip-item:hover {
+    transform: none;
+  }
+  
+  .play-interval-btn:hover:not(:disabled) {
+    transform: none;
+  }
+  
+  .submit-btn:hover:not(:disabled) {
+    transform: none;
+  }
+}

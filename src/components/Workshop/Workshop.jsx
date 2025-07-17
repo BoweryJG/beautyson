@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Workshop.css';
+import IntervalTrainer from '../IntervalTrainer/IntervalTrainer';
 
 const Workshop = () => {
   const [selectedForm, setSelectedForm] = useState('sonata');
@@ -91,6 +92,8 @@ const Workshop = () => {
             </div>
           </div>
         </div>
+
+        <IntervalTrainer />
       </div>
     </div>
   );
