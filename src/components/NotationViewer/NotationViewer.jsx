@@ -35,7 +35,7 @@ const NotationViewer = ({ notes = [], currentNote = null, selectedKey = 'C' }) =
     'Eb': ['bb', 'eb', 'ab']
   };
 
-  // Create a simple scale for the selected key
+  // Create a simple scale for the selected key (8 notes max)
   const createScale = (key) => {
     const scaleNotes = {
       'C': ['c/4', 'd/4', 'e/4', 'f/4', 'g/4', 'a/4', 'b/4', 'c/5'],
@@ -111,9 +111,10 @@ const NotationViewer = ({ notes = [], currentNote = null, selectedKey = 'C' }) =
         return staveNote;
       });
     } else {
-      // Display scale for the selected key
+      // Display scale for the selected key (limit to 8 notes)
       const scale = createScale(selectedKey);
-      notesToDisplay = scale.map(note => {
+      const limitedScale = scale.slice(0, 8);
+      notesToDisplay = limitedScale.map(note => {
         const staveNote = new StaveNote({ keys: [note], duration: 'q' });
         
         // Highlight current note
@@ -127,9 +128,13 @@ const NotationViewer = ({ notes = [], currentNote = null, selectedKey = 'C' }) =
     }
 
     if (notesToDisplay.length > 0) {
+      // Limit notes to prevent VexFlow "Too many ticks" error
+      const maxNotes = Math.min(notesToDisplay.length, 8);
+      const limitedNotes = notesToDisplay.slice(0, maxNotes);
+      
       // Create voice and add notes
-      const voice = new Voice({ num_beats: notesToDisplay.length, beat_value: 4 });
-      voice.addTickables(notesToDisplay);
+      const voice = new Voice({ num_beats: maxNotes, beat_value: 4 });
+      voice.addTickables(limitedNotes);
 
       // Format and draw
       const formatter = new Formatter();
