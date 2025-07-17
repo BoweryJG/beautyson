@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+    <defs>
+      <linearGradient id="brainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+        <stop offset="50%" style="stop-color:#00D9FF;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#39FF14;stop-opacity:1" />
+      </linearGradient>
+      <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style="stop-color:#39FF14;stop-opacity:1" />
+        <stop offset="50%" style="stop-color:#00D9FF;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      </linearGradient>
+    </defs>
+    
+    <!-- Background circle -->
+    <circle cx="90" cy="90" r="85" fill="#0A0A0A" stroke="url(#brainGradient)" stroke-width="6"/>
+    
+    <!-- Brain outline -->
+    <g fill="none" stroke="url(#brainGradient)" stroke-width="7">
+      <!-- Left brain hemisphere -->
+      <path d="M56 78 C50 67, 50 56, 62 50 C73 45, 84 50, 90 62 C90 73, 84 78, 78 84 C73 90, 62 90, 56 78 Z"/>
+      <!-- Right brain hemisphere -->
+      <path d="M124 78 C130 67, 130 56, 118 50 C107 45, 96 50, 90 62 C90 73, 96 78, 102 84 C107 90, 118 90, 124 78 Z"/>
+      <!-- Brain stem -->
+      <path d="M90 84 L90 107 C90 112, 84 118, 78 118 L102 118 C96 118, 90 112, 90 107"/>
+    </g>
+    
+    <!-- Sound waves -->
+    <g fill="none" stroke="url(#waveGradient)" stroke-width="5" opacity="0.8">
+      <path d="M34 90 C45 78, 45 102, 56 90" stroke-width="7"/>
+      <path d="M124 90 C135 78, 135 102, 146 90" stroke-width="7"/>
+      <path d="M22 90 C34 73, 34 107, 45 90" stroke-width="5"/>
+      <path d="M135 90 C146 73, 146 107, 158 90" stroke-width="5"/>
+    </g>
+    
+    <!-- Central neural spark -->
+    <circle cx="90" cy="70" r="6" fill="#39FF14" opacity="0.9"/>
+    
+    <!-- Synaptic connections -->
+    <g stroke="#00D9FF" stroke-width="3" opacity="0.6">
+      <line x1="67" y1="67" x2="78" y2="73"/>
+      <line x1="112" y1="67" x2="102" y2="73"/>
+      <line x1="78" y1="90" x2="90" y2="78"/>
+      <line x1="102" y1="90" x2="90" y2="78"/>
+    </g>
+    
+    <!-- Frequency dots -->
+    <g fill="#8B5CF6" opacity="0.7">
+      <circle cx="90" cy="124" r="3"/>
+      <circle cx="78" cy="129" r="3"/>
+      <circle cx="102" cy="129" r="3"/>
+    </g>
+  </svg>
