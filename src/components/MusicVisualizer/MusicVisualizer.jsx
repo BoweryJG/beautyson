@@ -129,12 +129,12 @@ const MusicVisualizer = ({ isPlaying = false, frequency = 440, waveform = 'sine'
 
   useEffect(() => {
     // Find nature patterns that match the current frequency
-    const matchingPatterns = Object.entries(naturePatterns).filter(([key, pattern]) => {
+    const matchingPatterns = Object.entries(naturePatterns).filter(([, pattern]) => {
       return pattern.frequencies.some(freq => Math.abs(freq - frequency) < 50);
     });
 
     setNature(matchingPatterns);
-  }, [frequency]);
+  }, [frequency, naturePatterns]);
 
   return (
     <div className="music-visualizer">

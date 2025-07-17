@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React from 'react';
 import useLocalStorage from './useLocalStorage';
 
 // Hook for managing user progress and achievements

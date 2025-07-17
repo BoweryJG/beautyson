@@ -156,7 +156,7 @@ const useAudio = () => {
   // Calculate note from frequency
   const getNote = useCallback((frequency) => {
     const A4 = 440;
-    const semitoneRatio = Math.pow(2, 1/12);
+    // const semitoneRatio = Math.pow(2, 1/12);
     const noteNames = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
     
     const semitonesFromA4 = Math.round(12 * Math.log2(frequency / A4));

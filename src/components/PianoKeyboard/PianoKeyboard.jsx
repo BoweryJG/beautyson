@@ -4,7 +4,7 @@ import useAudio from '../../hooks/useAudio';
 import NotationViewer from '../NotationViewer/NotationViewer';
 
 const PianoKeyboard = ({ onFrequencyChange }) => {
-  const { playTone, stopTone, noteFrequencies, getNote, isPlaying, resumeAudio } = useAudio();
+  const { playTone, stopTone, getNote, resumeAudio } = useAudio();
   const [pressedKeys, setPressedKeys] = useState(new Set());
   const [currentNote, setCurrentNote] = useState('A4');
   const [selectedKey, setSelectedKey] = useState('C');

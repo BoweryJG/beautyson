@@ -4,7 +4,7 @@ import useAudio from '../../hooks/useAudio';
 import useProgress from '../../hooks/useProgress';
 
 const IntervalTrainer = () => {
-  const { playTone, playChord, noteFrequencies } = useAudio();
+  const { playTone, playChord } = useAudio();
   const { progress, updateIntervalProgress, updatePreferences, getStats } = useProgress();
   const [currentInterval, setCurrentInterval] = useState(null);
   const [userGuess, setUserGuess] = useState('');

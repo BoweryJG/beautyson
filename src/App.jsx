@@ -8,6 +8,8 @@ import Library from './components/Library/Library';
 import MusicVisualizer from './components/MusicVisualizer/MusicVisualizer';
 import PianoKeyboard from './components/PianoKeyboard/PianoKeyboard';
 import ChordPlayer from './components/ChordPlayer/ChordPlayer';
+import LocalCommunity from './components/LocalCommunity/LocalCommunity';
+import NeuralJam from './components/NeuralJam/NeuralJam';
 import useAudio from './hooks/useAudio';
 
 function App() {
@@ -19,7 +21,9 @@ function App() {
     { id: 'observatory', name: 'The Observatory', icon: '🔭' },
     { id: 'invention-lab', name: 'The Invention Lab', icon: '⚙️' },
     { id: 'gallery', name: 'The Gallery', icon: '🎨' },
-    { id: 'library', name: 'The Library', icon: '📚' }
+    { id: 'library', name: 'The Library', icon: '📚' },
+    { id: 'neural-jam', name: 'Neural Jam', icon: '🧠' },
+    { id: 'community', name: 'Local Community', icon: '🌴' }
   ];
 
   const renderActiveSection = () => {
@@ -34,6 +38,10 @@ function App() {
         return <Gallery />;
       case 'library':
         return <Library />;
+      case 'neural-jam':
+        return <NeuralJam />;
+      case 'community':
+        return <LocalCommunity />;
       default:
         return <Workshop />;
     }

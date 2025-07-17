@@ -3,7 +3,7 @@ import './ChordPlayer.css';
 import useAudio from '../../hooks/useAudio';
 
 const ChordPlayer = () => {
-  const { playChord, noteFrequencies, intervals } = useAudio();
+  const { playChord, noteFrequencies } = useAudio();
   const [selectedKey, setSelectedKey] = useState('C');
   const [isPlaying, setIsPlaying] = useState(false);
 

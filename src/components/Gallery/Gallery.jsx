@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Gallery.css';
 
 const Gallery = () => {
-  const [compositions, setCompositions] = useState([
+  const [compositions] = useState([
     {
       id: 1,
       title: 'Sonata in C Major',
@@ -24,7 +24,7 @@ const Gallery = () => {
   ]);
 
   const [selectedComposition, setSelectedComposition] = useState(null);
-  const [achievements, setAchievements] = useState([
+  const [achievements] = useState([
     {
       id: 1,
       title: 'First Composition',

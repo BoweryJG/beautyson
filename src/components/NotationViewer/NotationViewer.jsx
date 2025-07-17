@@ -4,7 +4,7 @@ import './NotationViewer.css';
 
 const NotationViewer = ({ notes = [], currentNote = null, selectedKey = 'C' }) => {
   const svgRef = useRef(null);
-  const [renderer, setRenderer] = useState(null);
+  const [_renderer, setRenderer] = useState(null);
   const [dimensions, setDimensions] = useState({ width: 500, height: 200 });
 
   // Map of note names to VexFlow note representation
