@@ -1,0 +1,177 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { Renderer, Stave, StaveNote, Voice, Formatter } from 'vexflow';
+import './NotationViewer.css';
+
+const NotationViewer = ({ notes = [], currentNote = null, selectedKey = 'C' }) => {
+  const svgRef = useRef(null);
+  const [renderer, setRenderer] = useState(null);
+  const [dimensions, setDimensions] = useState({ width: 500, height: 200 });
+
+  // Map of note names to VexFlow note representation
+  const noteMap = {
+    'C': 'c/4',
+    'C#': 'c#/4',
+    'D': 'd/4',
+    'D#': 'd#/4',
+    'E': 'e/4',
+    'F': 'f/4',
+    'F#': 'f#/4',
+    'G': 'g/4',
+    'G#': 'g#/4',
+    'A': 'a/4',
+    'A#': 'a#/4',
+    'B': 'b/4'
+  };
+
+  // Key signatures
+  const keySignatures = {
+    'C': [],
+    'G': ['f#'],
+    'D': ['f#', 'c#'],
+    'A': ['f#', 'c#', 'g#'],
+    'E': ['f#', 'c#', 'g#', 'd#'],
+    'F': ['bb'],
+    'Bb': ['bb', 'eb'],
+    'Eb': ['bb', 'eb', 'ab']
+  };
+
+  // Create a simple scale for the selected key
+  const createScale = (key) => {
+    const scaleNotes = {
+      'C': ['c/4', 'd/4', 'e/4', 'f/4', 'g/4', 'a/4', 'b/4', 'c/5'],
+      'G': ['g/4', 'a/4', 'b/4', 'c/5', 'd/5', 'e/5', 'f#/5', 'g/5'],
+      'D': ['d/4', 'e/4', 'f#/4', 'g/4', 'a/4', 'b/4', 'c#/5', 'd/5'],
+      'A': ['a/4', 'b/4', 'c#/5', 'd/5', 'e/5', 'f#/5', 'g#/5', 'a/5'],
+      'E': ['e/4', 'f#/4', 'g#/4', 'a/4', 'b/4', 'c#/5', 'd#/5', 'e/5'],
+      'F': ['f/4', 'g/4', 'a/4', 'bb/4', 'c/5', 'd/5', 'e/5', 'f/5'],
+      'Bb': ['bb/4', 'c/5', 'd/5', 'eb/5', 'f/5', 'g/5', 'a/5', 'bb/5'],
+      'Eb': ['eb/4', 'f/4', 'g/4', 'ab/4', 'bb/4', 'c/5', 'd/5', 'eb/5']
+    };
+    
+    return scaleNotes[key] || scaleNotes['C'];
+  };
+
+  const updateDimensions = () => {
+    if (svgRef.current) {
+      const containerWidth = svgRef.current.parentElement.clientWidth;
+      setDimensions({
+        width: Math.min(containerWidth - 40, 800),
+        height: 200
+      });
+    }
+  };
+
+  useEffect(() => {
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
+  useEffect(() => {
+    if (!svgRef.current) return;
+
+    // Clear previous content
+    svgRef.current.innerHTML = '';
+
+    // Create renderer
+    const vfRenderer = new Renderer(svgRef.current, Renderer.Backends.SVG);
+    vfRenderer.resize(dimensions.width, dimensions.height);
+    setRenderer(vfRenderer);
+
+    const context = vfRenderer.getContext();
+    context.setFillStyle('var(--text-primary)');
+    context.setStrokeStyle('var(--text-primary)');
+
+    // Create stave
+    const stave = new Stave(20, 40, dimensions.width - 40);
+    
+    // Add clef and key signature
+    stave.addClef('treble');
+    const keySignature = keySignatures[selectedKey] || [];
+    if (keySignature.length > 0) {
+      stave.addKeySignature(selectedKey);
+    }
+    
+    stave.setContext(context).draw();
+
+    // Create notes to display
+    let notesToDisplay = [];
+    
+    if (notes.length > 0) {
+      // Display provided notes
+      notesToDisplay = notes.map(note => {
+        const vfNote = noteMap[note] || 'c/4';
+        const staveNote = new StaveNote({ keys: [vfNote], duration: 'q' });
+        
+        // Highlight current note
+        if (note === currentNote) {
+          staveNote.setStyle({ fillStyle: 'var(--neon-green)', strokeStyle: 'var(--neon-green)' });
+        }
+        
+        return staveNote;
+      });
+    } else {
+      // Display scale for the selected key
+      const scale = createScale(selectedKey);
+      notesToDisplay = scale.map(note => {
+        const staveNote = new StaveNote({ keys: [note], duration: 'q' });
+        
+        // Highlight current note
+        const noteName = note.split('/')[0].toUpperCase().replace('#', '#');
+        if (noteName === currentNote) {
+          staveNote.setStyle({ fillStyle: 'var(--electric-blue)', strokeStyle: 'var(--electric-blue)' });
+        }
+        
+        return staveNote;
+      });
+    }
+
+    if (notesToDisplay.length > 0) {
+      // Create voice and add notes
+      const voice = new Voice({ num_beats: notesToDisplay.length, beat_value: 4 });
+      voice.addTickables(notesToDisplay);
+
+      // Format and draw
+      const formatter = new Formatter();
+      formatter.joinVoices([voice]);
+      formatter.format([voice], dimensions.width - 80);
+      
+      voice.draw(context, stave);
+    }
+
+  }, [notes, currentNote, selectedKey, dimensions]);
+
+  return (
+    <div className="notation-viewer">
+      <div className="notation-header">
+        <h3>🎼 Musical Notation</h3>
+        <div className="key-display">
+          <span>Key: {selectedKey} Major</span>
+        </div>
+      </div>
+      
+      <div className="notation-container">
+        <svg ref={svgRef} className="notation-svg" />
+      </div>
+      
+      <div className="notation-info">
+        <div className="info-section">
+          <h4>🎯 Current Note</h4>
+          <p>{currentNote || 'Play a note to see it highlighted'}</p>
+        </div>
+        
+        <div className="info-section">
+          <h4>🎹 Scale Pattern</h4>
+          <p>Whole-Whole-Half-Whole-Whole-Whole-Half</p>
+        </div>
+        
+        <div className="info-section">
+          <h4>🔢 Mathematical Intervals</h4>
+          <p>Each scale degree has a specific frequency ratio</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default NotationViewer;

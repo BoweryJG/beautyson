@@ -1,0 +1,319 @@
+.chord-player {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 2px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.chord-player::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-accent);
+  background-size: 400% 400%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+.chord-player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.chord-player-header h3 {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  text-shadow: 0 0 10px var(--orange-accent);
+}
+
+.key-selector {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.key-selector label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.key-select {
+  background: var(--bg-tertiary);
+  border: 2px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  color: var(--text-primary);
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.key-select:hover {
+  border-color: var(--orange-accent);
+  box-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+}
+
+.progressions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.progression-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.progression-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-purple);
+  border-color: var(--purple-primary);
+}
+
+.progression-info h4 {
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.progression-info p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.chord-sequence {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 0.8rem;
+  font-family: 'Courier New', monospace;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.chord-symbol {
+  color: var(--text-accent);
+  font-weight: bold;
+}
+
+.progression-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.play-progression-btn {
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: 12px;
+  padding: 0.8rem 1.5rem;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.play-progression-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-neon);
+}
+
+.play-progression-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.individual-chords {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.chord-btn {
+  background: var(--bg-tertiary);
+  border: 2px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: 60px;
+}
+
+.chord-btn:hover:not(:disabled) {
+  background: var(--gradient-secondary);
+  border-color: var(--neon-green);
+  transform: translateY(-2px);
+}
+
+.chord-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chord-analysis {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.chord-analysis h4 {
+  color: var(--text-primary);
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-shadow: 0 0 10px var(--electric-blue);
+}
+
+.analysis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.chord-analysis-card {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.chord-analysis-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-green);
+  border-color: var(--neon-green);
+}
+
+.chord-label {
+  color: var(--text-accent);
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.chord-notes {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.chord-ratios {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-family: 'Courier New', monospace;
+}
+
+.theory-explanation {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.theory-explanation h4 {
+  color: var(--text-primary);
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-shadow: 0 0 10px var(--purple-primary);
+}
+
+.theory-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.theory-item {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.theory-item strong {
+  color: var(--text-accent);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.theory-item p {
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .chord-player {
+    padding: 1rem;
+  }
+  
+  .chord-player-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .progressions-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .individual-chords {
+    justify-content: center;
+  }
+  
+  .chord-btn {
+    min-width: 50px;
+  }
+  
+  .analysis-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .theory-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .progression-card:hover {
+    transform: none;
+  }
+  
+  .chord-analysis-card:hover {
+    transform: none;
+  }
+  
+  .play-progression-btn:hover:not(:disabled) {
+    transform: none;
+  }
+  
+  .chord-btn:hover:not(:disabled) {
+    transform: none;
+  }
+}

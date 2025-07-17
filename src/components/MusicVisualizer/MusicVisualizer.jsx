@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './MusicVisualizer.css';
 
-const MusicVisualizer = ({ isPlaying = false, frequency = 440, waveform = 'sine' }) => {
+const MusicVisualizer = ({ isPlaying = false, frequency = 440, waveform = 'sine', getFrequencyData = null }) => {
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
   const [nature, setNature] = useState([]);
@@ -76,10 +76,21 @@ const MusicVisualizer = ({ isPlaying = false, frequency = 440, waveform = 'sine'
         ctx.fill();
       }
 
-      // Draw frequency spectrum
+      // Draw frequency spectrum (real-time if available)
       const barWidth = canvas.width / 32;
+      const frequencyData = getFrequencyData ? getFrequencyData() : null;
+      
       for (let i = 0; i < 32; i++) {
-        const height = Math.sin(i * 0.5 + time * 0.1) * 50 + 60;
+        let height;
+        if (frequencyData && isPlaying) {
+          // Use real frequency data
+          const dataIndex = Math.floor((i / 32) * frequencyData.length);
+          height = (frequencyData[dataIndex] / 255) * 100 + 20;
+        } else {
+          // Use animated simulation
+          height = Math.sin(i * 0.5 + time * 0.1) * 50 + 60;
+        }
+        
         const x = i * barWidth;
         const y = canvas.height - height;
         

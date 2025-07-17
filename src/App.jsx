@@ -6,11 +6,13 @@ import InventionLab from './components/InventionLab/InventionLab';
 import Gallery from './components/Gallery/Gallery';
 import Library from './components/Library/Library';
 import MusicVisualizer from './components/MusicVisualizer/MusicVisualizer';
+import PianoKeyboard from './components/PianoKeyboard/PianoKeyboard';
+import ChordPlayer from './components/ChordPlayer/ChordPlayer';
+import useAudio from './hooks/useAudio';
 
 function App() {
   const [activeSection, setActiveSection] = useState('workshop');
-  const [currentFrequency, setCurrentFrequency] = useState(440);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { isPlaying, currentFrequency, getFrequencyData } = useAudio();
 
   const sections = [
     { id: 'workshop', name: 'The Workshop', icon: '🎼' },
@@ -72,7 +74,10 @@ function App() {
           isPlaying={isPlaying}
           frequency={currentFrequency}
           waveform="sine"
+          getFrequencyData={getFrequencyData}
         />
+        <PianoKeyboard />
+        <ChordPlayer />
         {renderActiveSection()}
       </main>
 
