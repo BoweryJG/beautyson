@@ -1,0 +1,228 @@
+.invention-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.instrument-selector {
+  background: var(--parchment);
+  border: 1px solid var(--bronze);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.instrument-selector h3 {
+  color: var(--sepia);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.instrument-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.instrument-card {
+  background: var(--warm-white);
+  border: 2px solid var(--sepia);
+  border-radius: 12px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.instrument-card:hover {
+  background: var(--gold);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px var(--soft-shadow);
+}
+
+.instrument-card.active {
+  background: var(--sepia);
+  color: var(--warm-white);
+}
+
+.instrument-sketch {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.instrument-name {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.instrument-description {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.instrument-details {
+  background: var(--parchment);
+  border: 1px solid var(--bronze);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.detail-header h3 {
+  color: var(--sepia);
+  font-size: 1.5rem;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.action-button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.play-button {
+  background: var(--gold);
+  color: var(--dark-brown);
+}
+
+.play-button:hover {
+  background: var(--bronze);
+  transform: translateY(-1px);
+}
+
+.build-button {
+  background: var(--sepia);
+  color: var(--warm-white);
+}
+
+.build-button:hover {
+  background: var(--dark-brown);
+  transform: translateY(-1px);
+}
+
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.detail-section {
+  background: var(--warm-white);
+  border: 1px solid var(--sepia);
+  border-radius: 8px;
+  padding: 1.2rem;
+}
+
+.detail-section h4 {
+  color: var(--sepia);
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+.detail-section p {
+  color: var(--dark-brown);
+  line-height: 1.6;
+}
+
+.workshop-area {
+  background: var(--parchment);
+  border: 1px solid var(--bronze);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.workshop-area h3 {
+  color: var(--sepia);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.workshop-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.workshop-panel {
+  background: var(--warm-white);
+  border: 1px solid var(--sepia);
+  border-radius: 8px;
+  padding: 1.2rem;
+}
+
+.workshop-panel h4 {
+  color: var(--sepia);
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+.workshop-panel p {
+  color: var(--dark-brown);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.workshop-panel ul {
+  list-style: none;
+  padding: 0;
+}
+
+.workshop-panel li {
+  background: var(--parchment);
+  border: 1px solid var(--bronze);
+  border-radius: 4px;
+  padding: 0.5rem 0.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--dark-brown);
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.workshop-panel li::before {
+  content: "⚙️";
+  position: absolute;
+  left: 0.3rem;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .instrument-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .detail-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .detail-actions {
+    justify-content: center;
+  }
+  
+  .workshop-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-button {
+    flex: 1;
+  }
+}

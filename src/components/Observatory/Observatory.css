@@ -1,0 +1,240 @@
+.observatory-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.composer-selector {
+  background: var(--parchment);
+  border: 1px solid var(--bronze);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.composer-selector h3 {
+  color: var(--sepia);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.composer-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.composer-button {
+  background: var(--warm-white);
+  border: 2px solid var(--sepia);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  min-width: 200px;
+}
+
+.composer-button:hover {
+  background: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--soft-shadow);
+}
+
+.composer-button.active {
+  background: var(--sepia);
+  color: var(--warm-white);
+}
+
+.composer-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.composer-years {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.piece-selector {
+  background: var(--parchment);
+  border: 1px solid var(--bronze);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.piece-selector h3 {
+  color: var(--sepia);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.piece-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.piece-button {
+  background: var(--warm-white);
+  border: 2px solid var(--sepia);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.piece-button:hover {
+  background: var(--gold);
+  transform: translateX(5px);
+}
+
+.piece-button.active {
+  background: var(--sepia);
+  color: var(--warm-white);
+}
+
+.analysis-panel {
+  background: var(--parchment);
+  border: 1px solid var(--bronze);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.analysis-panel h3 {
+  color: var(--sepia);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.analysis-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.analysis-overview {
+  background: var(--warm-white);
+  border: 1px solid var(--sepia);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.analysis-overview h4 {
+  color: var(--sepia);
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.analysis-overview p {
+  line-height: 1.6;
+  color: var(--dark-brown);
+}
+
+.analysis-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.detail-card {
+  background: var(--warm-white);
+  border: 1px solid var(--sepia);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.detail-card h4 {
+  color: var(--sepia);
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.detail-card p {
+  color: var(--dark-brown);
+  font-weight: 500;
+}
+
+.harmonic-analysis {
+  background: var(--warm-white);
+  border: 1px solid var(--sepia);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.harmonic-analysis h4 {
+  color: var(--sepia);
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.progression-display {
+  background: var(--parchment);
+  border: 1px solid var(--bronze);
+  border-radius: 6px;
+  padding: 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  text-align: center;
+  color: var(--dark-brown);
+  font-weight: bold;
+}
+
+.technical-features,
+.mathematical-elements {
+  background: var(--warm-white);
+  border: 1px solid var(--sepia);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.technical-features h4,
+.mathematical-elements h4 {
+  color: var(--sepia);
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.technical-features ul,
+.mathematical-elements ul {
+  list-style: none;
+  padding: 0;
+}
+
+.technical-features li,
+.mathematical-elements li {
+  background: var(--parchment);
+  border: 1px solid var(--bronze);
+  border-radius: 4px;
+  padding: 0.5rem 0.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--dark-brown);
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.technical-features li::before,
+.mathematical-elements li::before {
+  content: "•";
+  color: var(--sepia);
+  position: absolute;
+  left: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .composer-buttons {
+    flex-direction: column;
+  }
+  
+  .composer-button {
+    min-width: auto;
+  }
+  
+  .analysis-details {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -1,0 +1,215 @@
+/* Renaissance Portal - Beau's Musical Journey */
+:root {
+  --parchment: #F5F5DC;
+  --sepia: #8B4513;
+  --dark-brown: #654321;
+  --gold: #DAA520;
+  --bronze: #CD7F32;
+  --ink: #2F1B14;
+  --soft-shadow: rgba(139, 69, 19, 0.3);
+  --warm-white: #FFF8DC;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  background: linear-gradient(135deg, var(--parchment) 0%, var(--warm-white) 100%);
+  color: var(--ink);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Styles */
+.app-header {
+  background: linear-gradient(to right, var(--sepia), var(--dark-brown));
+  color: var(--warm-white);
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 8px var(--soft-shadow);
+}
+
+.header-content {
+  text-align: left;
+}
+
+.app-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.app-subtitle {
+  font-size: 1.2rem;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.da-vinci-sketch {
+  opacity: 0.8;
+  animation: gentle-rotate 20s infinite linear;
+}
+
+@keyframes gentle-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Navigation Styles */
+.main-nav {
+  background: var(--bronze);
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  box-shadow: 0 2px 4px var(--soft-shadow);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.nav-button {
+  background: var(--warm-white);
+  border: 2px solid var(--sepia);
+  border-radius: 8px;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  min-width: 140px;
+}
+
+.nav-button:hover {
+  background: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--soft-shadow);
+}
+
+.nav-button.active {
+  background: var(--sepia);
+  color: var(--warm-white);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.nav-icon {
+  font-size: 1.2rem;
+}
+
+.nav-text {
+  font-weight: 500;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Section Styles */
+.section {
+  background: var(--warm-white);
+  border: 2px solid var(--sepia);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px var(--soft-shadow);
+  margin-bottom: 2rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--bronze);
+  padding-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: var(--sepia);
+  margin-bottom: 0.5rem;
+}
+
+.section-description {
+  font-size: 1.1rem;
+  color: var(--dark-brown);
+  font-style: italic;
+}
+
+/* Footer */
+.app-footer {
+  background: var(--sepia);
+  color: var(--warm-white);
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .app-title {
+    font-size: 2rem;
+  }
+  
+  .main-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .nav-button {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+  
+  .main-content {
+    padding: 1rem;
+  }
+}
+
+/* Autism-friendly considerations */
+@media (prefers-reduced-motion: reduce) {
+  .da-vinci-sketch {
+    animation: none;
+  }
+  
+  .nav-button {
+    transition: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --parchment: #FFFFFF;
+    --sepia: #000000;
+    --dark-brown: #000000;
+    --gold: #000000;
+    --bronze: #666666;
+    --ink: #000000;
+    --warm-white: #FFFFFF;
+  }
+}
