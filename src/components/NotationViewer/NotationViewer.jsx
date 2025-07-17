@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Renderer, Stave, StaveNote, Voice, Formatter } from 'vexflow';
 import './NotationViewer.css';
 
@@ -6,6 +6,7 @@ const NotationViewer = ({ notes = [], currentNote = null, selectedKey = 'C' }) =
   const svgRef = useRef(null);
   const [_renderer, setRenderer] = useState(null);
   const [dimensions, setDimensions] = useState({ width: 500, height: 200 });
+  const renderTimeoutRef = useRef(null);
 
   // Map of note names to VexFlow note representation
   const noteMap = {
@@ -67,7 +68,7 @@ const NotationViewer = ({ notes = [], currentNote = null, selectedKey = 'C' }) =
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
-  useEffect(() => {
+  const renderNotation = useCallback(() => {
     if (!svgRef.current) return;
 
     // Clear previous content
@@ -97,9 +98,14 @@ const NotationViewer = ({ notes = [], currentNote = null, selectedKey = 'C' }) =
     // Create notes to display
     let notesToDisplay = [];
     
-    if (notes.length > 0) {
+    // Ensure notes is an array and filter out invalid entries
+    const validNotes = Array.isArray(notes) ? notes.filter(note => 
+      note && typeof note === 'string' && noteMap[note]
+    ) : [];
+    
+    if (validNotes.length > 0) {
       // Display provided notes
-      notesToDisplay = notes.map(note => {
+      notesToDisplay = validNotes.map(note => {
         const vfNote = noteMap[note] || 'c/4';
         const staveNote = new StaveNote({ keys: [vfNote], duration: 'q' });
         
@@ -128,23 +134,54 @@ const NotationViewer = ({ notes = [], currentNote = null, selectedKey = 'C' }) =
     }
 
     if (notesToDisplay.length > 0) {
-      // Limit notes to prevent VexFlow "Too many ticks" error
-      const maxNotes = Math.min(notesToDisplay.length, 8);
-      const limitedNotes = notesToDisplay.slice(0, maxNotes);
-      
-      // Create voice and add notes
-      const voice = new Voice({ num_beats: maxNotes, beat_value: 4 });
-      voice.addTickables(limitedNotes);
+      try {
+        // Limit notes to prevent VexFlow "Too many ticks" error
+        // Use a conservative limit of 6 notes to ensure stability
+        const maxNotes = Math.min(notesToDisplay.length, 6);
+        const limitedNotes = notesToDisplay.slice(0, maxNotes);
+        
+        // Calculate total beats based on note durations
+        // Since all notes are quarter notes ('q'), each note = 1 beat
+        const totalBeats = limitedNotes.length;
+        
+        // Ensure we have valid notes and reasonable beat count
+        if (totalBeats > 0 && totalBeats <= 6) {
+          // Create voice and add notes
+          const voice = new Voice({ num_beats: totalBeats, beat_value: 4 });
+          voice.addTickables(limitedNotes);
 
-      // Format and draw
-      const formatter = new Formatter();
-      formatter.joinVoices([voice]);
-      formatter.format([voice], dimensions.width - 80);
-      
-      voice.draw(context, stave);
+          // Format and draw
+          const formatter = new Formatter();
+          formatter.joinVoices([voice]);
+          formatter.format([voice], dimensions.width - 80);
+          
+          voice.draw(context, stave);
+        }
+      } catch (error) {
+        console.warn('VexFlow rendering error:', error);
+        // Draw a simple message on the stave if rendering fails
+        context.fillText('Unable to render notation', dimensions.width / 2 - 80, 120);
+      }
     }
-
   }, [notes, currentNote, selectedKey, dimensions]);
+
+  useEffect(() => {
+    // Clear any pending renders
+    if (renderTimeoutRef.current) {
+      clearTimeout(renderTimeoutRef.current);
+    }
+    
+    // Debounce the rendering to prevent rapid re-renders
+    renderTimeoutRef.current = setTimeout(() => {
+      renderNotation();
+    }, 50);
+
+    return () => {
+      if (renderTimeoutRef.current) {
+        clearTimeout(renderTimeoutRef.current);
+      }
+    };
+  }, [renderNotation]);
 
   return (
     <div className="notation-viewer">

@@ -44,7 +44,8 @@ const PianoKeyboard = ({ onFrequencyChange }) => {
     // Add to played notes for notation display
     setPlayedNotes(prev => {
       const newNotes = [...prev, key.note];
-      return newNotes.slice(-8); // Keep last 8 notes
+      // Keep last 6 notes to ensure VexFlow doesn't get overwhelmed
+      return newNotes.slice(-6);
     });
     
     if (onFrequencyChange) {
