@@ -755,25 +755,12 @@ button:active {
   }
   
   .main-nav {
-    position: fixed;
-    bottom: 0;
-    left: 2pt;
-    right: 2pt;
-    background: var(--glass-bg-strong);
-    backdrop-filter: blur(25px) saturate(200%);
-    border: 2px solid var(--glass-border-strong);
-    border-radius: 20px 20px 8px 8px;
-    padding: 0.8rem 0.5rem;
-    box-shadow: 
-      0 -10px 30px rgba(0, 0, 0, 0.5),
-      var(--shadow-purple),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    z-index: 1000;
-    animation: slide-up 0.8s var(--transition-bounce) 0.5s both;
+    display: none; /* Hide by default on mobile */
   }
   
-  /* Alternative mobile menu - dropdown style */
+  /* Mobile menu when opened */
   .main-nav.mobile-menu-open {
+    display: flex;
     position: fixed;
     top: 80px;
     left: 2pt;
@@ -792,6 +779,21 @@ button:active {
     animation: slide-up 0.3s var(--transition-bounce);
     flex-direction: column;
     gap: 0.5rem;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  
+  /* Mobile menu backdrop */
+  .main-nav.mobile-menu-open::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: -1;
   }
   
   .main-nav.mobile-menu-open .nav-button {
@@ -848,7 +850,7 @@ button:active {
   
   .main-content {
     padding: 1rem;
-    padding-bottom: 120px; /* Space for bottom navigation */
+    padding-bottom: 2rem; /* No bottom navigation, so less padding */
     animation: slide-up 0.8s var(--transition-bounce) 0.7s both;
   }
   
@@ -881,9 +883,7 @@ button:active {
   }
   
   .main-nav {
-    padding: 0.6rem 0.3rem;
-    border-radius: 16px 16px 8px 8px;
-    margin: 0 2pt;
+    display: none; /* Hide by default on iPhone too */
   }
   
   .nav-button {
@@ -903,7 +903,7 @@ button:active {
   
   .main-content {
     padding: 0.8rem;
-    padding-bottom: 100px;
+    padding-bottom: 2rem;
   }
   
   .section {
@@ -923,13 +923,13 @@ button:active {
 
 /* iPhone X and newer (notch support) */
 @media (max-width: 480px) and (min-height: 812px) {
-  .main-nav {
-    padding-bottom: calc(0.6rem + env(safe-area-inset-bottom));
-    margin: 0 max(2pt, env(safe-area-inset-left)) 0 max(2pt, env(safe-area-inset-right));
+  .main-nav.mobile-menu-open {
+    left: max(2pt, env(safe-area-inset-left));
+    right: max(2pt, env(safe-area-inset-right));
   }
   
   .main-content {
-    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom));
     padding-left: max(0.8rem, env(safe-area-inset-left));
     padding-right: max(0.8rem, env(safe-area-inset-right));
   }
@@ -942,12 +942,12 @@ button:active {
 
 /* Enhanced touch targets for mobile */
 @media (max-width: 768px) {
-  .nav-button {
+  .main-nav.mobile-menu-open .nav-button {
     min-height: 60px;
     touch-action: manipulation;
   }
   
-  .nav-button:hover {
+  .main-nav.mobile-menu-open .nav-button:hover {
     /* Disable hover effects on touch devices */
     transform: none;
     box-shadow: 
@@ -955,7 +955,7 @@ button:active {
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   
-  .nav-button:active {
+  .main-nav.mobile-menu-open .nav-button:active {
     transform: scale(0.95);
     animation: button-press 0.15s ease;
   }
