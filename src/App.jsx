@@ -5,9 +5,12 @@ import Observatory from './components/Observatory/Observatory';
 import InventionLab from './components/InventionLab/InventionLab';
 import Gallery from './components/Gallery/Gallery';
 import Library from './components/Library/Library';
+import MusicVisualizer from './components/MusicVisualizer/MusicVisualizer';
 
 function App() {
   const [activeSection, setActiveSection] = useState('workshop');
+  const [currentFrequency, setCurrentFrequency] = useState(440);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const sections = [
     { id: 'workshop', name: 'The Workshop', icon: '🎼' },
@@ -43,10 +46,10 @@ function App() {
         </div>
         <div className="da-vinci-sketch">
           <svg width="60" height="60" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="30" fill="none" stroke="#8B4513" strokeWidth="2"/>
-            <circle cx="50" cy="50" r="20" fill="none" stroke="#8B4513" strokeWidth="1"/>
-            <line x1="20" y1="50" x2="80" y2="50" stroke="#8B4513" strokeWidth="1"/>
-            <line x1="50" y1="20" x2="50" y2="80" stroke="#8B4513" strokeWidth="1"/>
+            <circle cx="50" cy="50" r="30" fill="none" stroke="var(--electric-blue)" strokeWidth="2"/>
+            <circle cx="50" cy="50" r="20" fill="none" stroke="var(--neon-green)" strokeWidth="1"/>
+            <line x1="20" y1="50" x2="80" y2="50" stroke="var(--purple-primary)" strokeWidth="1"/>
+            <line x1="50" y1="20" x2="50" y2="80" stroke="var(--orange-accent)" strokeWidth="1"/>
           </svg>
         </div>
       </header>
@@ -65,6 +68,11 @@ function App() {
       </nav>
 
       <main className="main-content">
+        <MusicVisualizer 
+          isPlaying={isPlaying}
+          frequency={currentFrequency}
+          waveform="sine"
+        />
         {renderActiveSection()}
       </main>
 
